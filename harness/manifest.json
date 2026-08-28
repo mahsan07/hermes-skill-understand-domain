@@ -1,0 +1,85 @@
+{
+  "protocol_version": "0.1",
+  "skill": {
+    "id": "hermes-skill-understand-domain",
+    "display_name": "Understand Domain",
+    "description": "Extract business-domain knowledge from a codebase and generate an interactive domain flow graph."
+  },
+  "task_profile": {
+    "category": "engineering",
+    "architecture": "graph",
+    "artifact": "graph",
+    "inputs": [
+      "Repository evidence",
+      "Domain entities"
+    ],
+    "outputs": [
+      "Domain knowledge graph",
+      "Customer",
+      "Order",
+      "Payment event",
+      "Fulfillment flow"
+    ]
+  },
+  "modules": {
+    "memory": {
+      "strategy": "entity_relationship_memory",
+      "responsibility": "Retain repository evidence plus decisions, observations, and verification evidence needed to resume safely."
+    },
+    "planning": {
+      "strategy": "dependency_and_path_traversal",
+      "responsibility": "Transform domain entities into the ordered, bounded stages defined by this skill."
+    },
+    "action": {
+      "strategy": "inspect_change_test_handoff",
+      "responsibility": "Advance the workflow through business rules while preserving stop conditions and user authority."
+    },
+    "capability": {
+      "strategy": "task_conditioned_minimum_capability_set",
+      "responsibility": "Expose only repository, runtime, and verification capabilities required by the bounded engineering task."
+    }
+  },
+  "execution": {
+    "stages": [
+      "Extract nouns events states and actors",
+      "Resolve code names into domain concepts",
+      "Link rules to implementing components",
+      "Trace representative business workflows",
+      "Cluster bounded contexts and ownership",
+      "Render an evidence-linked domain graph"
+    ],
+    "gates": [
+      "scope_and_authority_confirmed",
+      "capability_and_dependency_preflight",
+      "consequential_action_previewed_when_applicable",
+      "output_reopened_and_verified"
+    ]
+  },
+  "verification": {
+    "evidence": [
+      "Customer",
+      "Order",
+      "Payment event",
+      "Fulfillment flow"
+    ],
+    "metrics": [
+      "task_success",
+      "verification_pass_rate",
+      "tool_error_rate",
+      "repair_count",
+      "latency_ms",
+      "estimated_cost_usd"
+    ]
+  },
+  "failure_policy": {
+    "max_repairs": 2,
+    "schema_error": "repair_then_stop",
+    "permission_error": "stop_without_retry",
+    "verification_failure": "report_incomplete"
+  },
+  "maturity": {
+    "level": "executable_contract",
+    "runtime_scope": "validation_and_dry_run_planning",
+    "claim_boundary": "This repository validates and plans the harness contract; it does not claim live service execution or benchmark gains without a connected adapter and measured evidence."
+  }
+}
